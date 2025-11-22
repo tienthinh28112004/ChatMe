@@ -1,0 +1,40 @@
+.chat-logout-btn {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 2px solid #000000;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;               /* giúp nút KHÔNG cao quá */
+  transition: all 0.2s ease;
+}
+
+.chat-logout-btn i {
+  font-size: 0.9rem;
+  color: #000000;
+  transition: color 0.2s ease;
+}
+
+.chat-logout-btn:hover {
+  background: #000000;
+  color: #ffffff !important;
+  border-color: #000000;
+}
+
+.chat-logout-btn:hover i {
+  color: #ffffff !important;
+}
+
+/* Responsive: khi màn hình nhỏ, thu nút lại một chút */
+@media (max-width: 768px) {
+  .chat-logout-btn {
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    height: 34px;
+  }
+}

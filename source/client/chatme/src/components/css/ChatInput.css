@@ -1,0 +1,67 @@
+/* Khung input: chỉ padding ngang, cao cố định, căn giữa */
+.chat-input-wrapper {
+  background: #f4f7ff;
+  border-radius: 999px;
+  padding: 0 12px;                          /* chỉ trái–phải */
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+  height: 42px;                              /* chiều cao khung */
+  display: flex;
+  align-items: center;                       /* căn giữa theo trục dọc */
+}
+
+/* Ô input text: không padding dọc, chỉ ngang */
+.chat-input-field {
+  font-size: 0.95rem;
+  color: #111;
+  padding: 0 6px;                            /* bỏ padding trên–dưới */
+}
+
+.chat-input-field:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Icon nút nhỏ */
+.chat-input-icon-btn {
+  border: none;
+  background: transparent;
+  padding: 4px;
+  color: #8a94a6;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.chat-input-icon-btn:hover {
+  color: #6b7280;
+}
+
+/* Nút gửi gradient tròn nhỏ hơn */
+.chat-send-btn {
+  width: 38px;                       /* nhỏ hơn */
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #7b5cff, #ff4fd8);
+  color: #fff;
+
+  box-shadow: 0 4px 12px rgba(123, 92, 255, 0.35);
+  cursor: pointer;
+}
+
+.chat-send-btn i {
+  font-size: 0.9rem;
+}
+
+/* Upload button (paperclip) */
+.chat-input-wrapper label i {
+  font-size: 1rem;
+  color: #8a94a6;
+}
+
+.chat-input-wrapper label:hover i {
+  color: #6b7280;
+}

@@ -1,0 +1,50 @@
+{
+  "client": {
+    "anonymous": false,
+    "allowed_origins": [
+      "http://localhost:9000",
+      "http://localhost:3000"
+    ],
+    "token": {
+      "hmac_secret_key": "gMR1pU7hT6pFPxPj1Kx1lwCsgPvPYqH3O1ukJ4WZJjR8Evl/8c8bZlJm22MzU4PZpSRXwXny3vT2XxJ0npwWug==",
+      "jwt_algorithms": ["HS256"]
+    }
+  },
+  "http_api": {
+    "key": "4a37e0a2df8c19e783b5bfc4a30d911e39b8c7c3ee8d4c9a3a4b2b6e3a9b9b5f"
+  },
+  "allow_subscribe_for_client": false,
+
+  "engine": {
+    "type": "redis",
+    "redis": {
+      "address": "redis:6379"
+    }
+  },
+
+  "user_status": {
+    "enabled": true,
+    "redis": {
+      "address": "redis:6379"
+    },
+    "expire_interval": "24h"
+  },
+
+  "channel": {
+  "without_namespace": {
+    "presence": true,
+    "join_leave": true,
+    "force_push_join_leave": true
+  }
+},
+
+  "admin": {
+    "enabled": true,
+    "password": "admin123",
+    "secret": "b5mC7Y3XlO3h8mZlZzN7xqN2qPp8rRtXqJpVvRzL1zHqZrQw7e2xw9h0mF3tE7gJ"
+  },
+
+  "log": {
+    "level": "debug"
+  }
+}

@@ -1,0 +1,29 @@
+/* Khung search với VIỀN ĐEN RÕ */
+.search-wrapper {
+  background: #ffffff;
+  border-radius: 25px;
+  height: 40px;
+  border: 1.5px solid #000000;   /* <-- VIỀN ĐEN RÕ */
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+}
+
+/* Icon search đậm hơn */
+.search-wrapper i {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Input rõ, không mờ */
+.search-input {
+  background: transparent !important;
+  border: none !important;
+  font-size: 15px;
+  color: #222;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: none;
+}

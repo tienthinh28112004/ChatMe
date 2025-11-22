@@ -1,0 +1,53 @@
+
+
+.chat-message-list {
+  background: #f9fafb;
+}
+
+
+.chat-bubble {
+  max-width: 70%;           
+  min-width: 120px;
+  padding: 10px 16px;
+  border-radius: 18px;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+
+.chat-bubble-mine {
+  background: linear-gradient(135deg, #7b5cff, #ff4fd8);
+  color: #fff;
+  border-bottom-right-radius: 6px;
+}
+
+.chat-bubble-other {
+  background: #e7f0ff;
+  color: #111827;
+  border-bottom-left-radius: 6px;
+}
+
+.chat-sender-name {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+
+.chat-bubble-text {
+  display: block;
+  white-space: pre-wrap;    
+  word-break: break-all;   
+  overflow-wrap: anywhere; 
+}
+
+.chat-bubble-time {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}

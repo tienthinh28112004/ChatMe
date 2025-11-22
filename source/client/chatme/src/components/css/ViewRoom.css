@@ -1,0 +1,89 @@
+
+.chat-sidebar {
+  background: #f5f7ff;
+  border-radius: 1.5rem;
+}
+
+.chat-item {
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.chat-item:hover {
+  transform: translateY(-1px);
+}
+
+.chat-item-active {
+  background: #3b3f5c !important;
+}
+
+.chat-avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.chat-status-dot {
+  width: 12px;
+  height: 12px;
+  background-color: #16a34a;
+  border: 2px solid #ffffff;
+  right: 0;
+  bottom: 0;
+}
+
+
+/* wrapper giới hạn chiều rộng text */
+.room-info {
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;   /* CHỈNH SỐ NÀY THEO UI */
+  overflow: hidden;
+}
+
+/* tên nhóm */
+.room-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #111827;
+}
+
+/* last message */
+.room-last-message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #6b7280;
+}
+
+/* Khi phòng active — đổi màu sáng */
+.chat-item-active .room-name {
+  color: #ffffff !important;
+}
+
+.chat-item-active .room-last-message {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+
+.room-meta {
+  min-width: 48px; /* đảm bảo không bị lệch */
+}
+
+.room-last-time {
+  color: #9ca3af;
+}
+
+.chat-item-active .room-last-time {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* badge tin chưa đọc */
+.chat-unread-badge {
+  min-width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}

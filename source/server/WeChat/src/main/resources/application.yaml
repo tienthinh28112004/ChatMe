@@ -1,0 +1,69 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    # Mặc định chạy LOCAL: dùng localhost
+    # Khi chạy trong Docker: sẽ bị override bằng biến môi trường SPRING_DATASOURCE_URL
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/ChatMe}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:admin}
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2000MB
+      max-request-size: 2000MB
+      file-size-threshold: 2KB
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  data:
+    redis:
+      # LOCAL: dùng localhost:6379
+      # Docker: sẽ override bằng SPRING_DATA_REDIS_HOST / SPRING_DATA_REDIS_PORT
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 630173321423-arejn20gun74igit3bvfo0er6q5889jd.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://localhost:3000/oauth2/callback/google
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+
+centrifugo:
+  jwt-secret: gMR1pU7hT6pFPxPj1Kx1lwCsgPvPYqH3O1ukJ4WZJjR8Evl/8c8bZlJm22MzU4PZpSRXwXny3vT2XxJ0npwWug==
+  api-key: 4a37e0a2df8c19e783b5bfc4a30d911e39b8c7c3ee8d4c9a3a4b2b6e3a9b9b5f
+  # LOCAL: gọi http://localhost:8000
+  # Docker: override bằng CENTRIFUGO_API_URL => http://centrifugo:8000
+  api-url: ${CENTRIFUGO_API_URL:http://localhost:8000}
+
+app:
+  secret: =I82mz/9NnVguNXdWC/Q39GwXJr1z6Ok8=8fm10jksU5CU2BgT6Pml4wuYLe72xt
+  jwt:
+    token:
+      expires-in: 3600000   # 60 minutes in milliseconds
+    refresh-token:
+      expires-in: 86400000  # 24 hours in milliseconds
+  registration:
+    email:
+      token:
+        expires-in: 300000  # 5 phút
+
+cloudinary:
+  cloud-name: "dcuhpodqw"
+  api-key: "469646197951194"
+  api-secret: "CC7K_qhEmJUQ4Ji-DTF5hIvEUMI"
