@@ -1,10 +1,7 @@
 # MODULE SERVER
-
-> 📘 *Sinh viên mô tả phần **server** tại đây. Điền đầy đủ theo framework và bài toán của nhóm.*
-
 ---
 
-## 🎯 MỤC TIÊU
+## MỤC TIÊU
 
 Server chịu trách nhiệm:
 - Xử lý toàn bộ logic nghiệp vụ của ứng dụng (authentication, quản lý user, phòng chat, tin nhắn).
@@ -19,7 +16,7 @@ Server chịu trách nhiệm:
 
 ---
 
-## ⚙️ CÔNG NGHỆ SỬ DỤNG
+## CÔNG NGHỆ SỬ DỤNG
 
 | Thành phần     | Công nghệ                         |
 |----------------|-----------------------------------|
@@ -31,7 +28,7 @@ Server chịu trách nhiệm:
 
 ---
 
-## 🚀 HƯỚNG DẪN CHẠY
+## HƯỚNG DẪN CHẠY
 
 ### Cài đặt
 ```bash
@@ -53,7 +50,7 @@ Server chạy tại: `http://localhost:8080`
 
 ---
 
-## 🔗 API
+## API
 
 | Endpoint | Protocol | Method | Input | Output |
 |----------|----------|--------|--------|-------------------------------------------|
@@ -80,12 +77,9 @@ Server chạy tại: `http://localhost:8080`
 | `/api/rooms/join/{roomId}` | HTTP/1.1 | POST | Path: roomId | ApiResponse<RoomMemberResponse> |
 | `/api/rooms/leave/{roomId}` | HTTP/1.1 | POST | Path: roomId | ApiResponse<RoomMemberResponse> |
 
-
-> **Lưu ý:** Bổ sung các endpoint của nhóm vào bảng trên.
-
 ---
 
-## 📦 CẤU TRÚC
+## CẤU TRÚC
 ```
 server\
 ├── WeChat

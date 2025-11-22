@@ -1,10 +1,7 @@
 # MODULE CLIENT
-
-> 📘 *Sinh viên mô tả phần **client** tại đây. Điền đầy đủ theo framework và bài toán của nhóm.*
-
 ---
 
-## 🎯 MỤC TIÊU
+## MỤC TIÊU
 
 Client chịu trách nhiệm:
 - Hiển thị giao diện người dùng (UI) và toàn bộ tương tác của người dùng.
@@ -20,7 +17,7 @@ Client chịu trách nhiệm:
 
 ---
 
-## ⚙️ CÔNG NGHỆ SỬ DỤNG
+## CÔNG NGHỆ SỬ DỤNG
 
 | Thành phần        | Công nghệ                                      |
 |-------------------|------------------------------------------------|
@@ -30,7 +27,7 @@ Client chịu trách nhiệm:
 
 ---
 
-## 🚀 HƯỚNG DẪN CHẠY
+## HƯỚNG DẪN CHẠY
 
 ### Cài đặt
 ```bash
@@ -46,7 +43,7 @@ npm start
 - Server URL: `http://localhost:9000`
 ---
 
-## 📦 CẤU TRÚC
+## CẤU TRÚC
 ```
 client/
 ├── chatme
@@ -122,7 +119,7 @@ client/
 
 ---
 
-## 💡 SỬ DỤNG
+##  SỬ DỤNG
 ```bash
 # Ví dụ gửi request
 # Lấy subscription token cho một room
@@ -132,7 +129,7 @@ curl -X GET "http://localhost:9000/api/centrifugo/subcriptionToken?channels=room
 
 ---
 
-## 📝 GHI CHÚ
+## GHI CHÚ
 - Thường chạy client bằng lệnh docker compose up
 - Đảm bảo server đã chạy trước khi khởi động client
 - Mặc định kết nối đến `localhost:9000`
