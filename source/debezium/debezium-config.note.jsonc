@@ -1,0 +1,42 @@
+{
+  "name": "chatme-mysql-connector",      // Tên connector — Kafka Connect dùng để quản lý
+  "config": {
+    "connector.class": "io.debezium.connector.mysql.MySqlConnector", // Chọn connector Debezium MySQL
+
+    "database.hostname": "mysql",        // Tên service MySQL trong docker-compose.yml
+    "database.port": "3306",             // Port nội bộ trong Docker network
+    "database.user": "root",             // tài khoản root(trao quyền cao nhất)
+    "database.password": "admin",        // Password root
+    "database.server.id": "184054",      // ID duy nhất cho Debezium (replication ID)
+    "database.server.name": "chatme",    // Prefix để Debezium đặt tên topic Kafka=> chatme.<database>.<table>
+
+    "database.include.list": "ChatMe",   // Chỉ theo dõi database ChatMe
+    "table.include.list": "ChatMe.chat_cdc", // Chỉ theo dõi bảng chat_cdc (nơi em lưu event để đẩy realtime)
+
+    "include.schema.changes": "false",   // Không cần event DDL (ALTER TABLE...)
+    "tasks.max": "1",                    // Một connector task là đủ
+
+    "database.history.kafka.bootstrap.servers": "kafka:9092",// Kafka nội bộ (PLAINTEXT://kafka:9092)
+
+    "database.history.kafka.topic": "schema-changes.chatme",// Topic Kafka để lưu lịch sử schema (bắt buộc với MySQL connector)
+
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",// Debezium xuất message JSON, dễ đọc và dễ debug
+
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false",// Không thêm phần schema vào JSON → message nhẹ hơn, consumer dễ parse hơn
+
+    "snapshot.mode": "initial",// Lần đầu connector chạy → chụp snapshot dữ liệu hiện có trong chat_cdc,Sau đó → chỉ đọc binlog (real-time)
+
+    "poll.interval.ms": "100",// 100ms poll binlog → realtime gần như ngay lập tức
+
+    "transforms": "unwrap",              // Dùng transform unwrap
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",// Lấy "after" từ Debezium envelope → chỉ lấy record thật
+
+    "transforms.unwrap.drop.tombstones": "true",// Bỏ các tombstone record
+
+    "transforms.unwrap.delete.handling.mode": "drop"// Khi có DELETE → drop luôn, không gửi vào Kafka
+  }
+}
+//Dùng trực tiếp tài khoản mật khẩu cho là root và admin là hơi thiếu an toàn khi trao cho debezium quá nhiều quyền
+//Tuy nhiên vì mục dích là học tập,nên sau này nên tạo 1 cái user riêng để cho debezim đọc binlog

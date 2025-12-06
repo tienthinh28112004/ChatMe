@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+
 
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class MessageController {
     }
 
     @PostMapping("/rooms/sendMessage")
-    public ApiResponse<MessageResponse> sendMessage(@RequestBody MessageRequest request){
+    public ApiResponse<MessageResponse> sendMessage(@RequestBody MessageRequest request) throws JsonProcessingException{
         return ApiResponse.<MessageResponse>builder()
                 .message("gửi tin nhắn đến centrifugo(TCP)")
                 .result(messageService.sendMessage(request))

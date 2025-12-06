@@ -10,9 +10,15 @@
       "jwt_algorithms": ["HS256"]
     }
   },
+
+  "http_server": {
+    "address": "0.0.0.0"
+  },
+
   "http_api": {
     "key": "4a37e0a2df8c19e783b5bfc4a30d911e39b8c7c3ee8d4c9a3a4b2b6e3a9b9b5f"
   },
+
   "allow_subscribe_for_client": false,
 
   "engine": {
@@ -31,12 +37,12 @@
   },
 
   "channel": {
-  "without_namespace": {
-    "presence": true,
-    "join_leave": true,
-    "force_push_join_leave": true
-  }
-},
+    "without_namespace": {
+      "presence": true,
+      "join_leave": true,
+      "force_push_join_leave": true
+    }
+  },
 
   "admin": {
     "enabled": true,
@@ -46,5 +52,18 @@
 
   "log": {
     "level": "debug"
-  }
+  },
+
+  "consumers": [
+    {
+      "name": "mysql_kafka",
+      "type": "kafka",
+      "kafka": {
+        "brokers": ["kafka:9092"],
+        "topics": ["chatme.ChatMe.chat_cdc"],
+        "consumer_group": "centrifugo"
+      },
+      "enabled": true
+    }
+  ]
 }

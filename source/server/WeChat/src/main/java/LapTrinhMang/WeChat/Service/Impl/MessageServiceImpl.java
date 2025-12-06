@@ -2,19 +2,19 @@ package LapTrinhMang.WeChat.Service.Impl;
 
 import LapTrinhMang.WeChat.Dto.Request.MessageRequest;
 import LapTrinhMang.WeChat.Dto.Response.MessageResponse;
+import LapTrinhMang.WeChat.Entity.ChatCDC;
 import LapTrinhMang.WeChat.Entity.Message;
 import LapTrinhMang.WeChat.Entity.Room;
 import LapTrinhMang.WeChat.Entity.User;
 import LapTrinhMang.WeChat.Enums.MessageState;
 import LapTrinhMang.WeChat.Exception.BadRequestException;
 import LapTrinhMang.WeChat.Exception.NotFoundException;
-import LapTrinhMang.WeChat.Repository.MessageRepository;
-import LapTrinhMang.WeChat.Repository.RoomMemberRepository;
-import LapTrinhMang.WeChat.Repository.RoomRepository;
-import LapTrinhMang.WeChat.Repository.UserRepository;
+import LapTrinhMang.WeChat.Repository.*;
 import LapTrinhMang.WeChat.Service.CentrifugoService;
 import LapTrinhMang.WeChat.Service.MessageService;
 import LapTrinhMang.WeChat.Utils.SecurityUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +32,8 @@ public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
     private final RoomMemberRepository roomMemberRepository;
     private final CentrifugoService centrifugoService;
+    private final ChatCDCRepository chatCDCRepository;
+    private final ObjectMapper objectMapper;
     @Override
     public List<MessageResponse> listMessageByRoom(String roomId) {
         String userId = SecurityUtils.getCurrentLogin()
@@ -52,7 +54,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional
-    public MessageResponse sendMessage(MessageRequest request) {
+    public MessageResponse sendMessage(MessageRequest request) throws JsonProcessingException {
         String userId = SecurityUtils.getCurrentLogin()
                 .orElseThrow(()->new NotFoundException("User not found"));
         User sender = userRepository.findById(userId)
@@ -77,9 +79,10 @@ public class MessageServiceImpl implements MessageService {
         room.setBumpedAt(LocalDateTime.now());
         roomRepository.save(room);
 
+        MessageResponse messageResponse =MessageResponse.convert(message);
         //Dành cho những ai đang mở phòng này
         String roomChannel = "room#"+room.getId();
-        centrifugoService.broadcast(List.of(roomChannel),MessageResponse.convert(message),"room_message_"+message.getId());
+//        centrifugoService.broadcast(List.of(roomChannel),messageResponse,"room_message_"+message.getId());
 
         //Thông báo đến tất cả thành viên
         List<String> userIds = roomMemberRepository.findUserIdsByRoomId(request.getRoomId());
@@ -90,9 +93,38 @@ public class MessageServiceImpl implements MessageService {
         Map<String,Object> data = Map.of(
                 "type","message_added",
                 "roomId",room.getId(),
-                "message",MessageResponse.convert(message)
+                "message",messageResponse
         );
-        centrifugoService.broadcast(channels,data,"message_"+message.getId());
-        return MessageResponse.convert(message);
+//        centrifugoService.broadcast(channels,data,"message_"+message.getId());
+        String partitionKey = room.getId();
+
+        //Event cho room chanel
+        Map<String,Object> roomPayload = Map.of(
+                "method","broadcast",
+                "channels",List.of(roomChannel),
+                "data",messageResponse,
+                "id","room_message_"+message.getId()
+        );
+        ChatCDC roomCDC = ChatCDC.builder()
+                .method("broadcast")
+                .partitionKey(partitionKey)
+                .payload(objectMapper.writeValueAsString(roomPayload))
+                .build();
+        chatCDCRepository.save(roomCDC);
+        //Event cho personals channels
+        Map<String, Object> personalPayload = Map.of(
+                "method", "broadcast",
+                "channels", channels,
+                "data", data,
+                "id", "message_" + message.getId()
+        );
+        ChatCDC allMemberRoom = ChatCDC.builder()
+                .method("broadcast")
+                .payload(objectMapper.writeValueAsString(personalPayload))
+                .partitionKey(partitionKey)
+                .build();
+        chatCDCRepository.save(allMemberRoom);
+
+        return messageResponse;
     }
 }
